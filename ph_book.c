@@ -157,7 +157,9 @@ int delet_info()
     while( z <= max ){ // max고민
         if( strcmp(tmp_nu,p[z].name) == 0 ){
             while( j < max ){
-                p[j] = p[j+1]; //자료를 앞으로 복사(strcpy가능), 당긴 후 마지막 내용 삭제
+                strcpy(p[j].name, p[j+1].name);
+                p[j].age = p[j+1].age;
+                strcpy(p[j].number, p[j+1].number);
                 j++;
             }
             strcpy(p[max-1].name, &tmp1);
@@ -184,5 +186,4 @@ int all_info()
     printf("\n");
     return 0;
 }
-
 
