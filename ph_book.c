@@ -85,7 +85,7 @@ int search_info() //정보로 검색 추가
     scanf("%s", who);
     
     while( j <= max ){
-        if ( strcmp(who,p[j].name) == 0 ){ //*************************************why...?
+        if ( strcmp(who,p[j].name) == 0 ){
             printf("Name: %s\nAge: %d\nPhone Number: %s\n", p[j].name, p[j].age, p[j].number);
         }
         j++;
