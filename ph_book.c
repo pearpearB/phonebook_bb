@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
 typedef struct s_phonebook
 {
@@ -149,18 +148,18 @@ int delet_info()
     char tmp1 = {0,};
     char tmp2 = {0,};
     int z = 0;
-    int j = z;
+   // int j = z;
     
     printf("Delet for name: ");
     scanf("%s", tmp_nu);
     
     while( z <= max ){ // max고민
         if( strcmp(tmp_nu,p[z].name) == 0 ){
-            while( j < max ){
-                strcpy(p[j].name, p[j+1].name);
-                p[j].age = p[j+1].age;
-                strcpy(p[j].number, p[j+1].number);
-                j++;
+            while( z < max ){
+                strcpy(p[z].name, p[z+1].name);
+                p[z].age = p[z+1].age;
+                strcpy(p[z].number, p[z+1].number);
+                z++;
             }
             strcpy(p[max-1].name, &tmp1);
             p[max-1].age = '\0';
@@ -186,4 +185,3 @@ int all_info()
     printf("\n");
     return 0;
 }
-
