@@ -8,14 +8,13 @@ typedef struct s_phonebook
         char number[12];
 }ph_book;
 
-int Yes;
-int max = 0;
+int Yes; //메뉴입력
+int max = 0; // 총 인원
 int add_info(void); //추가
 int search_info(void); //검색
 int Update_info(void); //수정
 int delet_info(void); //삭제
 int all_info(void); //목록
-int max_all(int i); // 현재 최대값 구할 것
 struct s_phonebook p[100];
 
 int main()
@@ -51,7 +50,7 @@ int main()
                 break;
 
             default:
-                printf("Try Again.\n");
+                printf("! Try Again.\n");
                 break;
         }
 
@@ -65,21 +64,36 @@ int add_info()
     printf("Input Name: ");
     scanf("%s", p[max].name);
     getchar();
-    printf("Input Age: ");
-    scanf("%d", &p[max].age);
+    
+    while (1){
+        printf("Input Age: "); 
+        scanf("%d", &p[max].age);
+        getchar();
+        
+        if( p[max].age > 0 ){
+            break;
+
+        } else {
+            printf("! Enter a Number, Try Again\n");
+            getchar();
+        }
+    }
+    
     printf("Input Phone Number: ");
     scanf("%s", p[max].number);
+    getchar();
+    
     max++;
 
-    printf("\n");
+    printf("Done.\n");
     return 0;
 }
 
-int search_info() //정보로 검색 추가
+int search_info() 
 {
     char who[20];
     int j = 0;
-    
+    printf("\n***** Search *****\n");
     printf("Search for name: ");
     scanf("%s", who);
     
@@ -90,7 +104,7 @@ int search_info() //정보로 검색 추가
         j++;
     }
     
-    printf("\n");
+    printf("Done.\n");
     return 0;
 }
 
@@ -103,6 +117,7 @@ int Update_info()
     int j;
     int cho;
 
+    printf("\n***** Update *****\n");
     printf("Update for name: ");
     scanf("%s", tmp_na);
     
@@ -138,7 +153,7 @@ int Update_info()
         z++;
     }
     
-    printf("\n");
+    printf("Done.\n");
     return 0;
 }
 
@@ -148,12 +163,12 @@ int delet_info()
     char tmp1 = {0,};
     char tmp2 = {0,};
     int z = 0;
-   // int j = z;
     
+    printf("\n***** Delet *****\n");
     printf("Delet for name: ");
     scanf("%s", tmp_nu);
     
-    while( z <= max ){ // max고민
+    while( z <= max ){ 
         if( strcmp(tmp_nu,p[z].name) == 0 ){
             while( z < max ){
                 strcpy(p[z].name, p[z+1].name);
@@ -168,20 +183,29 @@ int delet_info()
         z++;
     }
     max--;
-    printf("\n");
+    printf("Done.\n");
     return 0;
 }
 
 int all_info()
 {
     int j = 0;
-    printf("-Total: %d\n", max);
-    
-    while( j < max ){
-        printf("Name: %s\nAge: %d\nPhone Number: %s\n", p[j].name, p[j].age, p[j].number);
-        printf("\n");
-        j++;
+    printf("\n***** Print All *****\n");
+    printf(">>Total: %d<<\n", max);
+
+    if( max == 0){
+        printf("! EMPTY, Go to Insert.\n");
     }
-    printf("\n");
+    
+    else{
+        while( j < max ){
+            printf("No. %d\nName: %s\nAge: %d\nPhone Number: %s\n", j+1, p[j].name, p[j].age, p[j].number);
+            printf("\n");
+            j++;
+        }
+        printf("Done.\n");
+    }
     return 0;
 }
+
+
