@@ -184,6 +184,10 @@ int delet_info()
             p[max-1].age = '\0';
             strcpy(p[max-1].number, &tmp2);
         }
+        else{
+            printf("! No Result\n");
+            break;
+        }
         z++;
     }
     max--;
