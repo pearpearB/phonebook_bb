@@ -105,13 +105,14 @@ int search_info()
     while( j <= max ){
         if ( strcmp(who,p[j].name) == 0 ){
             printf("Name: %s\nAge: %d\nPhone Number: %s\n", p[j].name, p[j].age, p[j].number);
-        }
-        else{
-            printf("! No Result.\n");
-            break;
+            break; 
         }
         j++;
     }
+
+    if ( j > max ){
+           printf("! No Result.\n");
+        }
     
     printf("Done.\n");
     return 0;
@@ -130,7 +131,7 @@ int Update_info()
     printf("Update for name: ");
     scanf("%s", tmp_na);
     
-    while(z < max){
+    while(z <= max){  
         if( strcmp(tmp_na,p[z].name) == 0 ){
             printf("Update %s's data\n", tmp_na);
             printf("1. name\n2. age\n3. number\n");
@@ -157,15 +158,15 @@ int Update_info()
                     printf("Try Again.\n");
                     break;
             }
-
-        }
-        else {
-            printf("! No Result.\n");
-            break;
+        break;
         }
         z++;
     }
-    
+
+    if( z > max){  //결과가 없으면 위에서 max+1(z++) 까지, 다 돌고 나옴
+         printf("! No Result.\n"); 
+    } 
+
     printf("Done.\n");
     return 0;
 }
@@ -192,14 +193,16 @@ int delet_info()
             strcpy(p[max-1].name, &tmp1);
             p[max-1].age = '\0';
             strcpy(p[max-1].number, &tmp2);
-        }
-        else{
-            printf("! No Result.\n");
+            max--; 
             break;
         }
         z++;
     }
-    max--;
+
+    if( z > max ){ //아악!!!!!!!!!!! 삭제는 되는데 ,,, 이게뜨네,,,?
+        printf("! No Result.\n");
+    }
+
     printf("Done.\n");
     return 0;
 }
