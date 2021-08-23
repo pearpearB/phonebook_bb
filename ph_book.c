@@ -183,7 +183,9 @@ int delet_info()
     scanf("%s", tmp_nu);
     
     while( z <= max ){ 
+    printf("1 %d\n", z);
         if( strcmp(tmp_nu,p[z].name) == 0 ){
+    printf("2 %d\n", z);
             while( z < max ){
                 strcpy(p[z].name, p[z+1].name);
                 p[z].age = p[z+1].age;
@@ -195,11 +197,13 @@ int delet_info()
             strcpy(p[max-1].number, &tmp2);
             max--; 
             break;
+    printf("3 %d\n", z);
         }
         z++;
     }
-
-    if( z > max ){ //아악!!!!!!!!!!! 삭제는 되는데 ,,, 이게뜨네,,,?
+printf("4 %d\n", z); // if break 했는데 왜 끝까지 돌고 나오는거죵
+printf("4 %d\n", max);
+    if( z > max ){ //아악!!!!!!!!!!! 삭제는 되는데 ,,, 삭제하고 이게뜨네,,,? 
         printf("! No Result.\n");
     }
 
