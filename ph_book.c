@@ -101,6 +101,10 @@ int search_info()
         if ( strcmp(who,p[j].name) == 0 ){
             printf("Name: %s\nAge: %d\nPhone Number: %s\n", p[j].name, p[j].age, p[j].number);
         }
+        else{
+            printf("! No Result\n");
+            break;
+        }
         j++;
     }
     
