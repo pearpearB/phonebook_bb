@@ -110,7 +110,7 @@ int add_info()
     return 0;
 }
 
-int search_info() //2명 넣었을 때 1결과나오고 결과없음 뜸 2 결과 없음뜸 ,,,if 문제인듯
+int search_info() 
 {
     char who[20];
     int j = 0;
@@ -118,15 +118,16 @@ int search_info() //2명 넣었을 때 1결과나오고 결과없음 뜸 2 결�
     printf("Search for name: ");
     scanf("%s", who);
     
-    while( j <= max ){
+    while( j < max ){ // j <= max -> = : 포인터에 접근할 수 없으므로 segmentation fault (문자열에선 됐는뎅)
         if ( strcmp(who,p[j]->name) == 0 ){
             printf("Name: %s\nAge: %d\nPhone Number: %s\n", p[j]->name, p[j]->age, p[j]->number);
-        }
-        else{
-            printf("! No Result\n");
             break;
         }
         j++;
+    }
+
+    if ( j == max ){  
+        printf("! No Result.\n");
     }
     
     printf("Done.\n");
@@ -155,10 +156,12 @@ int Update_info()
             
             switch(cho){
                 case 1:
-                    printf("New Name: ");
-                    scanf("%s", new_na);
                     p[max]->name = NULL;
                     p[max]->name = malloc(sizeof(char) * strlen(new_na) +1);
+                    
+                    printf("New Name: "); //!!! : 이름을 바꾸니까 segmentation fault
+                    scanf("%s", new_na);
+
                     strcpy(p[z]->name, new_na);
                     break;
                 case 2:
@@ -175,11 +178,14 @@ int Update_info()
                     printf("Try Again.\n");
                     break;
             }
-
+        break;
         }
         z++;
     }
     
+    if( z > max){  
+         printf("! No Result.\n"); 
+    } 
     printf("Done.\n");
     return 0;
 }
