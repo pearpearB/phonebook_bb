@@ -61,30 +61,35 @@ int main()
 
 int add_info()
 {
-    printf("Input Name: ");
-    scanf("%s", p[max].name);
-    getchar();
-    
-    while (1){
-        printf("Input Age: "); 
-        scanf("%d", &p[max].age);
+    if( max < 100){
+        printf("Input Name: ");
+        scanf("%s", p[max].name);
         getchar();
-        
-        if( p[max].age > 0 ){
-            break;
-
-        } else {
-            printf("! Enter a Number, Try Again\n");
+    
+        while (1){
+            printf("Input Age: "); 
+            scanf("%d", &p[max].age);
             getchar();
+        
+            if( p[max].age > 0 ){
+                break;
+
+            } else {
+                printf("! Enter a Number, Try Again.\n");
+                getchar();
+            }
         }
+
+        printf("Input Phone Number: ");
+        scanf("%s", p[max].number);
+        getchar();
+    
+        max++;
+    }
+    else {
+        printf("! FULL, Go to Delet.\n");
     }
     
-    printf("Input Phone Number: ");
-    scanf("%s", p[max].number);
-    getchar();
-    
-    max++;
-
     printf("Done.\n");
     return 0;
 }
@@ -102,7 +107,7 @@ int search_info()
             printf("Name: %s\nAge: %d\nPhone Number: %s\n", p[j].name, p[j].age, p[j].number);
         }
         else{
-            printf("! No Result\n");
+            printf("! No Result.\n");
             break;
         }
         j++;
@@ -154,6 +159,10 @@ int Update_info()
             }
 
         }
+        else {
+            printf("! No Result.\n");
+            break;
+        }
         z++;
     }
     
@@ -185,7 +194,7 @@ int delet_info()
             strcpy(p[max-1].number, &tmp2);
         }
         else{
-            printf("! No Result\n");
+            printf("! No Result.\n");
             break;
         }
         z++;
