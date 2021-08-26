@@ -73,9 +73,8 @@ int add_info()
 {
     p[max] = malloc(sizeof(ph_book));
     
-    char na[20] = {0,};
-    //na = (char *)malloc(sizeof(char) * strlen(na) +1); //? 스캔에프 글자수만큼 받고 시퍼여
-
+    char na[20];
+    
     p[max]->name = malloc(sizeof(char) * strlen(na) +1);
     p[max]->number = malloc(sizeof(char) * 12);
     
@@ -118,7 +117,7 @@ int search_info()
     printf("Search for name: ");
     scanf("%s", who);
     
-    while( j < max ){ // j <= max -> = : 포인터에 접근할 수 없으므로 segmentation fault (문자열에선 됐는뎅)
+    while( j < max ){ // j <= max -> = : 포인터에 접근할 수 없으므로 segmentation fault 
         if ( strcmp(who,p[j]->name) == 0 ){
             printf("Name: %s\nAge: %d\nPhone Number: %s\n", p[j]->name, p[j]->age, p[j]->number);
             break;
@@ -126,7 +125,7 @@ int search_info()
         j++;
     }
 
-    if ( j == max ){  
+    if ( j == max ){  // 결과 없을 때 다 돌고 나오니까
         printf("! No Result.\n");
     }
     
@@ -156,10 +155,9 @@ int Update_info()
             
             switch(cho){
                 case 1:
-                    p[max]->name = NULL;
-                    p[max]->name = malloc(sizeof(char) * strlen(new_na) +1);
+                    p[z]->name = realloc(p[z]->name, sizeof(char) * strlen(new_na) +1); // malloc은 한번 반환되면 다시 사용 불가, realloc으로 크기 바궈주기
                     
-                    printf("New Name: "); //!!! : 이름을 바꾸니까 segmentation fault
+                    printf("New Name: ");
                     scanf("%s", new_na);
 
                     strcpy(p[z]->name, new_na);
@@ -190,20 +188,25 @@ int Update_info()
     return 0;
 }
 
-int delet_info() // !!! : 한명 넣고 살제할때 튕김 & 2명일때 1삭제잘됨 2삭제되고 결과없음,,, if 문제인듯
+int delet_info() // !!! : 아예 삭제가 안되냉
 {
+    
     char tmp_na[20];
     char tmp1 = {0,};
     char tmp2 = {0,};
     int z = 0;
+    int new_max = max;
     
     printf("\n***** Delet *****\n");
     printf("Delet for name: ");
     scanf("%s", tmp_na);
     
-    while( z <= max ){ 
+    /////////여기 이후로 세그먼트 오류
+    while( z < max ){ 
+    printf("1 %d", z);
         if( strcmp(tmp_na,p[z]->name) == 0 ){
             while( z < max ){
+    printf("2 %d", z);
                 strcpy(p[z]->name, p[z+1]->name);
                 p[z]->age = p[z+1]->age;
                 strcpy(p[z]->number, p[z+1]->number);
@@ -212,14 +215,18 @@ int delet_info() // !!! : 한명 넣고 살제할때 튕김 & 2명일때 1삭제
             strcpy(p[max-1]->name, &tmp1);
             p[max-1]->age = '\0';
             strcpy(p[max-1]->number, &tmp2);
-        }
-        else{
-            printf("! No Result\n");
-            break;
+             max--;
+             break;
         }
         z++;
     }
-    max--;
+printf("3 %d", z);
+printf("3 %d", max);
+
+    if( new_max == max) {
+        printf("! No Result\n");
+    }
+
     printf("Done.\n");
     return 0;
 }
