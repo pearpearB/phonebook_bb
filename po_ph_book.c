@@ -188,40 +188,33 @@ int Update_info()
     return 0;
 }
 
-int delet_info() // !!! : 아예 삭제가 안되냉
+int delet_info() 
 {
-    
     char tmp_na[20];
-    char tmp1 = {0,};
-    char tmp2 = {0,};
     int z = 0;
     int new_max = max;
-    
+ 
     printf("\n***** Delet *****\n");
     printf("Delet for name: ");
-    scanf("%s", tmp_na);
-    
-    /////////여기 이후로 세그먼트 오류
+    scanf("%s", tmp_na); 
+
     while( z < max ){ 
-    printf("1 %d", z);
-        if( strcmp(tmp_na,p[z]->name) == 0 ){
+        if( strcmp(p[z]->name, tmp_na) == 0 ){
             while( z < max ){
-    printf("2 %d", z);
+    /* 이게 왜 안될까
                 strcpy(p[z]->name, p[z+1]->name);
                 p[z]->age = p[z+1]->age;
                 strcpy(p[z]->number, p[z+1]->number);
+     */       
+              p[z]= p[z+1];
+
                 z++;
             }
-            strcpy(p[max-1]->name, &tmp1);
-            p[max-1]->age = '\0';
-            strcpy(p[max-1]->number, &tmp2);
              max--;
              break;
         }
         z++;
     }
-printf("3 %d", z);
-printf("3 %d", max);
 
     if( new_max == max) {
         printf("! No Result\n");
