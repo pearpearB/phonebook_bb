@@ -16,19 +16,17 @@ int search_info(void); //검색
 int Update_info(void); //수정
 int delet_info(void); //삭제
 int all_info(void); //목록 
+int end_info(void); // 나가기
 struct s_phonebook *p[100];
 
 int main()
-{
-    int i = 0; // 말록 프리
-    
+{   
     while(1){
         printf("***** MENU *****\n");
         printf("1. Insert\n2. Search\n3. Update\n4. Delet\n5. Print All\n6. Exit\n");
-        printf("Choose the item: ");
+        printf("ooh\n");
+	printf("Choose the item: ");
         scanf("%d", &Yes);
-
-        if(Yes == 6) break;
 
         switch(Yes)
         {
@@ -52,19 +50,16 @@ int main()
                 all_info();
                 break;
 
+             case 6:
+                end_info();
+                break;
+
             default:
                 printf("! Try Again.\n");
                 break;
         }
 
     }
-        while ( i < max){
-            free(p[i]->name);
-            free(p[i]->number);
-            i++;
-        }
-
-        free(p);
         
         return 0;
 }
@@ -193,28 +188,27 @@ int delet_info()
     char tmp_na[20];
     int z = 0;
     int new_max = max;
- 
+int j = 0;
     printf("\n***** Delet *****\n");
     printf("Delet for name: ");
     scanf("%s", tmp_na); 
 
     while( z < max ){ 
         if( strcmp(p[z]->name, tmp_na) == 0 ){
-            while( z < max ){
-    /* 이게 왜 안될까
-                strcpy(p[z]->name, p[z+1]->name);
-                p[z]->age = p[z+1]->age;
-                strcpy(p[z]->number, p[z+1]->number);
-     */       
-              p[z]= p[z+1];
-
+            while( z < max ){      
+                p[z]= p[z+1];
                 z++;
             }
-             max--;
-             break;
+            max--;
+            p[max] = NULL;
+            //free(p[max]->name); 세그먼트폴트
+            //free(p[max]->number);
         }
         z++;
     }
+printf("%d\n", z);
+printf("%d\n", max);
+printf("%s\n", p[max-1]->name);
 
     if( new_max == max) {
         printf("! No Result\n");
@@ -233,7 +227,6 @@ int all_info()
     if( max == 0){
         printf("! EMPTY, Go to Insert.\n");
     }
-    
     else{
         while( j < max ){
             printf("No. %d\nName: %s\nAge: %d\nPhone Number: %s\n", j+1, p[j]->name, p[j]->age, p[j]->number);
@@ -243,4 +236,19 @@ int all_info()
         printf("Done.\n");
     }
     return 0;
+}
+
+int end_info()
+{
+    int i = 0;
+             
+    while ( i < max){
+        free(p[i]->name);
+        free(p[i]->number);
+        i++;
+        }
+    
+    // free(p); ??? : 오류, 구조체는 free 안해도 되나?
+
+    exit(0);    
 }
