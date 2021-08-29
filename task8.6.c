@@ -8,6 +8,25 @@ struct ph_book{
     char *number;
 };
 
+void addLast(struct ph_book *target)
+{
+int i = 0;
+    struct ph_book *newbook = malloc(sizeof(struct ph_book));
+    struct ph_book *Last = target->next;
+
+    while(Last->next != NULL)     //Last로 접근하면 segmentation fault!
+    {
+        Last = Last->next;
+    }
+
+    Last->next = newbook;
+    newbook->name = "tomato";
+    newbook->age = 42;
+    newbook->number = "01044442222";
+
+    newbook->next = NULL;
+}
+
 int main()
 {
     int i = 1;
@@ -28,11 +47,13 @@ int main()
 
     ph_book2->next = NULL;
 
+    addLast(head);
+
     struct ph_book *curr = head->next;
 
     while (curr != NULL)
     {
-        printf("phonebook %d.\n", i);
+        printf("*phonebook %d.\n", i);
         printf("name : %s\n", curr->name);
         printf("age : %d\n", curr->age);
         printf("number : %s\n", curr->number);
@@ -40,8 +61,14 @@ int main()
         i++;
     }
 
-    free(ph_book2);
-    free(ph_book1);
+   curr = head->next;
+   while(curr != NULL)
+   {
+       struct ph_book *next = curr->next;
+       free(curr);
+       curr = next;
+   }
+
     free(head);
 
     return 0;
