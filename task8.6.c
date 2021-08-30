@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct ph_book{
     struct ph_book *next;
@@ -10,7 +11,6 @@ struct ph_book{
 
 void addLast(struct ph_book *target)
 {
-int i = 0;
     struct ph_book *newbook = malloc(sizeof(struct ph_book));
     struct ph_book *Last = target->next;
 
@@ -27,10 +27,49 @@ int i = 0;
     newbook->next = NULL;
 }
 
-int main()
+int delet_node(struct ph_book *target, char *target_name)
 {
-    int i = 1;
-    
+    struct ph_book *Delet = target->next;
+    struct ph_book *Bool = target->next;
+    bool b;
+   
+    while(Delet->next!= NULL)
+    {
+
+    //    if(Delet->name == target_name){   // !!! : tomato만 나옴
+    //        target->next = Delet->next; 
+    //        free(Delet);
+    //    }
+       
+        if(Delet->next->name == target_name){
+            Delet->next =  Delet->next->next;
+    //        free(Delet);   // !!! !!! : 여기서 SIGABRT 안 뜸!!왜??
+        }
+
+        Delet = Delet->next;    
+    }
+
+    while (Bool->next != NULL)
+    {
+        if(Bool->next->name != target_name){
+            b = true;
+        }
+        else{
+            b = false;
+        }
+        Bool = Bool->next;
+    }
+
+    printf(b ? "true" : "false");    
+    printf("\n");
+
+    return b;
+}
+
+int main()
+{   
+    int i = 1; // 전화번호부 수
+
     struct ph_book *head = malloc(sizeof(struct ph_book));
 
     struct ph_book *ph_book1 = malloc(sizeof(struct ph_book));
@@ -48,6 +87,7 @@ int main()
     ph_book2->next = NULL;
 
     addLast(head);
+    delet_node(head, "taeho");
 
     struct ph_book *curr = head->next;
 
@@ -65,11 +105,16 @@ int main()
    while(curr != NULL)
    {
        struct ph_book *next = curr->next;
-       free(curr);
+       free(curr);   // !!! : 여기서 SIGABRT??
        curr = next;
    }
 
     free(head);
+
+while(1)   // leaks 확인을 위한 와일문
+{
+
+}
 
     return 0;
 }
