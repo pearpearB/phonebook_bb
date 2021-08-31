@@ -2,17 +2,17 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-struct ph_book{
-    struct ph_book *next;
+typedef struct node{
+    node *next;
     char *name;
     int age;
     char *number;
-};
+}node;
 
-void addLast(struct ph_book *target)
+void add_node(node *target)
 {
-    struct ph_book *newbook = malloc(sizeof(struct ph_book));
-    struct ph_book *Last = target->next;
+    node *newbook = malloc(sizeof(node));
+    node *Last = target->next;
 
     while(Last->next != NULL)     //Last로 접근하면 segmentation fault!
     {
@@ -27,23 +27,19 @@ void addLast(struct ph_book *target)
     newbook->next = NULL;
 }
 
-int delet_node(struct ph_book *target, char *target_name)
+int delet_node(char *target_name, node *target)
 {
-    struct ph_book *Delet = target->next;
-    struct ph_book *Bool = target->next;
+    node *Delet = target->next;
+    node *tmp = target; 
+    node *Bool = target->next;
     bool b;
    
     while(Delet->next!= NULL)
-    {
-
-    //    if(Delet->name == target_name){   // !!! : tomato만 나옴
-    //        target->next = Delet->next; 
-    //        free(Delet);
-    //    }
-       
+    {      
         if(Delet->next->name == target_name){
-            Delet->next =  Delet->next->next;
-    //        free(Delet);   // !!! !!! : 여기서 SIGABRT 안 뜸!!왜??
+            Delet->next = tmp;
+            Delet->next = Delet->next->next;
+            free(tmp);  
         }
 
         Delet = Delet->next;    
@@ -70,15 +66,15 @@ int main()
 {   
     int i = 1; // 전화번호부 수
 
-    struct ph_book *head = malloc(sizeof(struct ph_book));
+    node *head = malloc(sizeof(node));
 
-    struct ph_book *ph_book1 = malloc(sizeof(struct ph_book));
+    node *ph_book1 = malloc(sizeof(node));
     head->next = ph_book1;
     ph_book1->name = "jueun";
     ph_book1->age = 27;
     ph_book1->number = "01099995555";
     
-    struct ph_book *ph_book2 = malloc(sizeof(struct ph_book));
+    node *ph_book2 = malloc(sizeof(node));
     ph_book1->next = ph_book2;
     ph_book2->name = "taeho";
     ph_book2->age = 25;
@@ -86,10 +82,10 @@ int main()
 
     ph_book2->next = NULL;
 
-    addLast(head);
-    delet_node(head, "taeho");
+    add_node(head);
+    delet_node("taeho", head);
 
-    struct ph_book *curr = head->next;
+    node *curr = head->next;
 
     while (curr != NULL)
     {
@@ -104,17 +100,12 @@ int main()
    curr = head->next;
    while(curr != NULL)
    {
-       struct ph_book *next = curr->next;
-       free(curr);   // !!! : 여기서 SIGABRT??
+       node *next = curr->next;
+       free(curr);   
        curr = next;
    }
 
     free(head);
-
-while(1)   // leaks 확인을 위한 와일문
-{
-
-}
 
     return 0;
 }
