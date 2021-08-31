@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 typedef struct node{
-    node *next;
+    struct node *next;
     char *name;
     int age;
     char *number;
@@ -29,16 +29,15 @@ void add_node(node *target)
 
 int delet_node(char *target_name, node *target)
 {
-    node *Delet = target->next;
-    node *tmp = target; 
+    node *Delet = target->next; 
     node *Bool = target->next;
+    node *tmp = Delet->next;
     bool b;
    
     while(Delet->next!= NULL)
     {      
         if(Delet->next->name == target_name){
-            Delet->next = tmp;
-            Delet->next = Delet->next->next;
+            Delet->next = tmp->next;
             free(tmp);  
         }
 
