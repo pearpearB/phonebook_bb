@@ -205,6 +205,8 @@ int exit_Node(node *target)
     while(curr != NULL)
     {
         node *next = curr->next;
+        free(curr->name);
+        free(curr->number);
         free(curr);   
         curr = next;
     }
