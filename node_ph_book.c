@@ -67,7 +67,7 @@ int add_Node(node *target)
     node *add_Last = target->next;
 
     new_book->name = malloc(sizeof(char)*strlen(tmp_name)+1);
-    new_book->name = malloc(sizeof(char)*strlen(tmp_number)+1);
+    new_book->number = malloc(sizeof(char)*12);
 
     printf("\n******* Insert *******\n");
 
@@ -112,8 +112,6 @@ int add_Node(node *target)
     strcpy(new_book->number, tmp_number); 
     getchar();
 
-// ??? : segmentation fault
-
     new_book->next = NULL;
 
     max++;
@@ -139,24 +137,32 @@ int delet_Node(node *target)
     {
         printf("! EMPTY, Go to Insert.\n");
     }
-
-    printf("Delet for name: ");
-    scanf("%s", tmp_name);
-
-    while(Delet->next != NULL)
+    else
     {
-        if(Delet->next->name == tmp_name)
-        {
-            Delet->next = tmp->next;
-            free(tmp);
-        }
+        printf("Delet for name: ");
+        scanf("%s", tmp_name);
+        getchar();
 
-        Delet = Delet->next;
+        while(Delet->next != NULL)
+        {
+            if( strcmp(Delet->next->name, tmp_name) == 0)
+            {
+                Delet->next = tmp->next;
+                free(tmp);
+
+                max--;
+
+                printf("Done.\n");
+
+                return 0;
+
+            }
+
+            Delet = Delet->next;
+        }
     }
 
-    max--;
-
-    printf("Done.\n");
+    printf("%s is not found.\n", tmp_name);
 
     return 0;
 
@@ -174,6 +180,8 @@ int print_Node(node *target)
     }
     else
     {
+        printf("\n******Total : %d******\n", max);
+
         while (curr != NULL)
         {
             printf("*phonebook %d.\n", i);
