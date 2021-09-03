@@ -125,11 +125,8 @@ int add_Node(node *target)
 int delet_Node(node *target)
 {
     node *Delet = target->next; 
-    node *tmp = Delet->next;
     char tmp_name[20];
     int i = 0;
-    
-// ??? : segmentation fault
 
     printf("\n******* Delet *******\n");
 
@@ -139,6 +136,8 @@ int delet_Node(node *target)
     }
     else
     {
+        node *tmp = Delet->next;
+
         printf("Delet for name: ");
         scanf("%s", tmp_name);
         getchar();
@@ -160,9 +159,9 @@ int delet_Node(node *target)
 
             Delet = Delet->next;
         }
-    }
 
-    printf("%s is not found.\n", tmp_name);
+        printf("%s is not found.\n", tmp_name);
+    }
 
     return 0;
 
