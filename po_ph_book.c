@@ -24,8 +24,7 @@ int main()
     while(1){
         printf("***** MENU *****\n");
         printf("1. Insert\n2. Search\n3. Update\n4. Delet\n5. Print All\n6. Exit\n");
-        printf("ooh\n");
-	printf("Choose the item: ");
+    	printf("Choose the item: ");
         scanf("%d", &Yes);
 
         switch(Yes)
